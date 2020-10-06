@@ -28,7 +28,7 @@ bool png_toolkit::save( const std::string &pictureName )
 }
 
 
-image_data png_toolkit::getPixelData( void ) const
+image_data png_toolkit::getPixelData(void ) const
 {
     return imgData;
 }
