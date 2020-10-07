@@ -16,19 +16,19 @@ struct pixel{
 
 class ImageZone {
 private:
-    int left = 0;
-    int right = 0;
-    int up = 0;
-    int bottom = 0;
+    unsigned int left = 0;
+    unsigned int right = 0;
+    unsigned int up = 0;
+    unsigned int bottom = 0;
     image_data imgData;
     pixel curPixel;
 public:
     ImageZone(int up, int left,int bottom, int right, image_data& img);
     ImageZone(FilerParams& params, image_data& img);
-    pixel& get_pixel(int row, int column);
-    bool set_pixel(int row, int column, pixel newPixel);
-    int get_width() const;
-    int get_height() const;
+    pixel& get_pixel(unsigned int row,unsigned int column);
+    bool set_pixel(unsigned int row,unsigned  int column, pixel newPixel);
+    unsigned int get_width() const;
+    unsigned int get_height() const;
 
     ImageZone(FilerParams params, image_data data);
 };

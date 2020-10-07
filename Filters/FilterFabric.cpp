@@ -14,6 +14,7 @@ Filter *FilterFabric::createFilter(FilerParams params) {
             filter = new Filter_Red();
             break;
         case FilterID::THRESHOLD_ID:
+            filter = new Filter_Threshold();
             break;
         default:
             filter = nullptr;

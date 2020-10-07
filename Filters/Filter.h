@@ -9,7 +9,8 @@
 
 
 class Filter {
-
+protected:
+    stbi_uc intensity(pixel& pixel);
 public:
     virtual void filter_image(ImageZone& img_data) = 0;
     virtual ~Filter()= default;

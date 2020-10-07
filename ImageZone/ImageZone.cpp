@@ -12,25 +12,25 @@ ImageZone::ImageZone(int up, int left, int bottom, int right, image_data &img) :
     curPixel.compPerPixel = img.compPerPixel;
 }
 
-pixel& ImageZone::get_pixel(int row, int column) {
-    int idx = (imgData.w * (up + row) + (column + left)) * imgData.compPerPixel;
+pixel& ImageZone::get_pixel(unsigned int row,unsigned int column) {
+    unsigned int idx = (imgData.w * (up + row) + (column + left)) * imgData.compPerPixel;
     for(int i = 0; i < curPixel.compPerPixel; i++){
         curPixel.colors[i] = imgData.pixels[idx + i];
     }
     return curPixel;
 }
 
-int ImageZone::get_width() const {
+unsigned int ImageZone::get_width() const {
     return right - left;
 }
 
-int ImageZone::get_height() const {
+unsigned int ImageZone::get_height() const {
     return bottom - up;
 }
 
-bool ImageZone::set_pixel(int row, int column, pixel newPixel) {
+bool ImageZone::set_pixel(unsigned int row,unsigned int column, pixel newPixel) {
     if(column > (right - left) || row > (bottom - up) || newPixel.compPerPixel != imgData.compPerPixel) return false;
-    int idx = (imgData.w * (up + row) + (column + left)) * imgData.compPerPixel;
+    unsigned int idx = (imgData.w * (up + row) + (column + left)) * (unsigned int)imgData.compPerPixel;
     for(int i = 0; i < curPixel.compPerPixel; i++){
         imgData.pixels[idx + i] = curPixel.colors[i];
     }
