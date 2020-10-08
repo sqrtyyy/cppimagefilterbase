@@ -5,8 +5,6 @@
 #include "Filters/FilterFabric.h"
 int main( int argc, char *argv[] )
 {
-    // toolkit filter_name base_pic_name sudent_tool student_pic_name limitPix limitMSE
-    // toolkit near test.png images!
     try
     {
         if (argc != 4)

@@ -4,6 +4,4 @@
 
 #include "KernFilter.h"
 
-KernFilter::~KernFilter() {
-    delete kern;
-}
+KernFilter::~KernFilter() = default;

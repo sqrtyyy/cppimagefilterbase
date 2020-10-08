@@ -6,10 +6,12 @@
 #define STUDENT_TOOLKIT_KERNFILTER_H
 
 #include "Filter.h"
+#include <vector>
+using std::vector;
 
 class KernFilter : public Filter {
 protected:
-    stbi_uc* kern = nullptr;
+    vector<int> kern = {};
     unsigned int kernSize = 0;
     ~KernFilter() override;
 };
