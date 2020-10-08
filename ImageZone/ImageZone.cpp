@@ -32,7 +32,7 @@ bool ImageZone::set_pixel(unsigned int row,unsigned int column, pixel newPixel) 
     if(column > (right - left) || row > (bottom - up) || newPixel.compPerPixel != imgData.compPerPixel) return false;
     unsigned int idx = (imgData.w * (up + row) + (column + left)) * (unsigned int)imgData.compPerPixel;
     for(int i = 0; i < curPixel.compPerPixel; i++){
-        imgData.pixels[idx + i] = curPixel.colors[i];
+        imgData.pixels[idx + i] = newPixel.colors[i];
     }
     return true;
 }

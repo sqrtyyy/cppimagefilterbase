@@ -21,7 +21,7 @@ private:
     unsigned int up = 0;
     unsigned int bottom = 0;
     image_data imgData;
-    pixel curPixel;
+    pixel curPixel = {{0,0,0,0}, 0};
 public:
     ImageZone(int up, int left,int bottom, int right, image_data& img);
     ImageZone(FilerParams& params, image_data& img);

@@ -3,13 +3,39 @@
 //
 
 #include <iostream>
+#include <vector>
 #include "Filter_Threshold.h"
 
 void Filter_Threshold::filter_image(ImageZone &img_data) {
     if (kern == nullptr) return;
     Filter_BW filterBw;
     filterBw.filter_image(img_data);
+    unsigned int pixelsInKernLine = img_data.get_width() * kernSize;
+    unsigned int zeroPixelAbscissa[pixelsInKernLine * 2];
+    unsigned int zeroPixelOrdinate[pixelsInKernLine * 2];
+    unsigned int zeroNum1 = 0;
+    unsigned int zeroNum2 = 0;
     for(unsigned int line = 0; line < img_data.get_height(); line++){
+        if((line + 1) % 5 == 0){
+            unsigned int zeroNum;
+            unsigned int part;
+            if((line + 1) / 5 % 2 == 0){
+                zeroNum = zeroNum2;
+                part = 1;
+                zeroNum2 = 0;
+                std::cout << "second" << zeroNum << std::endl;
+            } else {
+                zeroNum = zeroNum1;
+                part = 0;
+                zeroNum1 = 0;
+                std::cout << "first" << zeroNum << std::endl;
+            }
+            part *= pixelsInKernLine;
+            pixel nullPixel = {{0,0,0}, 3};
+            for(unsigned int i = 0; i < zeroNum; i++){
+                img_data.set_pixel( zeroPixelOrdinate[i + part], zeroPixelAbscissa[i + part], nullPixel);
+            }
+        }
         for(unsigned int column = 0; column < img_data.get_width(); column++){
             int pixelInKern = 0;
             pixel& pixel = img_data.get_pixel(line,column);
@@ -28,8 +54,19 @@ void Filter_Threshold::filter_image(ImageZone &img_data) {
             }
             std::nth_element(kern, kern + pixelInKern/2, kern + pixelInKern);
             if(pixel.colors[0] < kern[pixelInKern/2]){
-                pixel.colors[0] = pixel.colors[1] = pixel.colors[2] = 0;
-                img_data.set_pixel(line, column, pixel);
+                unsigned int zeroNum;
+                unsigned int part;
+                if((line + 1) / 5 % 2 == 1){
+                    zeroNum = zeroNum2;
+                    part = 1;
+                    zeroNum2++;
+                } else {
+                    zeroNum = zeroNum1;
+                    part = 0;
+                    zeroNum1++;
+                }
+                zeroPixelAbscissa[zeroNum + part * pixelsInKernLine] = column;
+                zeroPixelOrdinate[zeroNum + part * pixelsInKernLine] = line;
             }
         }
     }
