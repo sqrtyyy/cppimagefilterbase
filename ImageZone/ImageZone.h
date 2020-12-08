@@ -22,7 +22,11 @@ private:
     unsigned int bottom = 0;
     image_data imgData;
     pixel curPixel = {{0,0,0,0}, 0};
+    bool isNull = false;
 public:
+    bool isEmpty() const{
+        return isNull;
+    }
     ImageZone(int up, int left,int bottom, int right, image_data& img);
     ImageZone(FilerParams& params, image_data& img);
     pixel& get_pixel(unsigned int row,unsigned int column);

@@ -6,7 +6,7 @@
 #include "Filter_Threshold.h"
 
 void Filter_Threshold::filter_image(ImageZone &img_data) {
-    if (kern.empty()) return;
+    if (kern.empty() || img_data.isEmpty()) return;
     Filter_BW filterBw;
     filterBw.filter_image(img_data);
     vector<std::pair<unsigned int,unsigned int>> blacked = {};

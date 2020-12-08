@@ -9,6 +9,7 @@ ImageZone::ImageZone(int up, int left, int bottom, int right, image_data &img) :
     this->bottom = bottom == 0 ? 0 : img.h / bottom;
     this->left = left == 0 ? 0 : img.w / left;
     this->right = right == 0 ? 0 : img.w / right;
+    isNull = (up >= bottom) || (left >= right);
     curPixel.compPerPixel = img.compPerPixel;
 }
 
@@ -31,7 +32,7 @@ unsigned int ImageZone::get_height() const {
 bool ImageZone::set_pixel(unsigned int row,unsigned int column, pixel newPixel) {
     if(column > (right - left) || row > (bottom - up)) return false;
     unsigned int idx = (imgData.w * (up + row) + (column + left)) * (unsigned int)imgData.compPerPixel;
-    for(int i = 0; i < 3; i++){
+    for(int i = 0; i < newPixel.compPerPixel; i++){
         imgData.pixels[idx + i] = newPixel.colors[i];
     }
     return true;
@@ -43,6 +44,7 @@ ImageZone::ImageZone(FilerParams &params, image_data &img) {
     left = params.left;
     right = params.right;
     imgData = img;
+    isNull = (up >= bottom) || (left >= right);
 }
 
 ImageZone::ImageZone(FilerParams params, image_data data) {
@@ -51,5 +53,6 @@ ImageZone::ImageZone(FilerParams params, image_data data) {
     this->left = params.left == 0 ? 0 : data.w / params.left;
     this->right = params.right == 0 ? 0 : data.w / params.right;
     curPixel.compPerPixel = data.compPerPixel;
+    isNull = (up >= bottom) || (left >= right);
     imgData = data;
 }
