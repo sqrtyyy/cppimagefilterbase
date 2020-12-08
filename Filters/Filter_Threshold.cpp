@@ -9,7 +9,7 @@ void Filter_Threshold::filter_image(ImageZone &img_data) {
     if (kern.empty()) return;
     Filter_BW filterBw;
     filterBw.filter_image(img_data);
-    vector<std::pair<unsigned int,unsigned int>> zeroed = {};
+    vector<std::pair<unsigned int,unsigned int>> blacked = {};
     for(unsigned int line = 0; line < img_data.get_height(); line++){
         for(unsigned int column = 0; column < img_data.get_width(); column++){
             int pixelInKern = 0;
@@ -24,12 +24,12 @@ void Filter_Threshold::filter_image(ImageZone &img_data) {
 
             std::nth_element(kern.begin(), kern.begin() + pixelInKern / 2, kern.begin() + pixelInKern);
             if(img_data.get_pixel(line, column).colors[0] < kern[pixelInKern / 2]){
-               zeroed.emplace_back(line, column);
+               blacked.emplace_back(line, column);
             }
         }
     }
     pixel blackPixel = {{0, 0, 0}, 3};
-    for(auto & coord : zeroed){
+    for(auto & coord : blacked){
         img_data.set_pixel(coord.first, coord.second, blackPixel);
     }
 }
