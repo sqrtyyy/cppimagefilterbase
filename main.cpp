@@ -1,6 +1,5 @@
 #include <iostream>
 #include "png_toolkit.h"
-#include "Filters/Filter_BW.h"
 #include "ConfigReader/ConfigFilterReader.h"
 #include "Filters/FilterFabric.h"
 int main( int argc, char *argv[] )
@@ -12,13 +11,12 @@ int main( int argc, char *argv[] )
         png_toolkit studTool;
         if(studTool.load(argv[2])){
             ConfigFilterReader reader(argv[1]);
-            FilerParams* params;
-            while ((params = reader.nextFilter()) != nullptr) {
-                Filter *filter = FilterFabric::createFilter(*params);
-                ImageZone zone = ImageZone(*params, studTool.getPixelData());
+            FilerParams params{};
+            while ((params = reader.nextFilter()) != FilerParams{}) {
+                Filter *filter = FilterFabric::createFilter(params);
+                ImageZone zone = ImageZone(params, studTool.getPixelData());
                 filter->filter_image(zone);
                 delete filter;
-                delete params;
             }
             studTool.save(argv[3]);
         }

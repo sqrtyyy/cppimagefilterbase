@@ -33,6 +33,10 @@ struct FilerParams{
     int left;
     int bottom;
     int right;
+
+    bool operator==(const FilerParams &rhs) const;
+
+    bool operator!=(const FilerParams &rhs) const;
 };
 
 class ConfigFilterReader {
@@ -40,7 +44,7 @@ private:
     std::ifstream cfgFile;
 public:
     explicit ConfigFilterReader(string const& fileName);
-    FilerParams* nextFilter();
+    FilerParams nextFilter();
     ~ConfigFilterReader();
 };
 

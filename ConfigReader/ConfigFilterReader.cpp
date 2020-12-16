@@ -4,19 +4,19 @@
 
 #include "ConfigFilterReader.h"
 
-FilerParams* ConfigFilterReader::nextFilter() {
+FilerParams ConfigFilterReader::nextFilter() {
     if(cfgFile.is_open() && !cfgFile.eof()){
-        auto*  filterParams = new FilerParams();
+        FilerParams  filterParams{};
         string filterName;
         cfgFile >> filterName;
         auto  filterNameID = nameFilterToID.find(filterName);
         if (filterNameID != nameFilterToID.end()) {
-            filterParams->name = filterNameID->second;
+            filterParams.name = filterNameID->second;
         }
-        cfgFile >> filterParams->up >> filterParams->left >> filterParams->bottom >> filterParams->right;
+        cfgFile >> filterParams.up >> filterParams.left >> filterParams.bottom >> filterParams.right;
         return filterParams;
     } else {
-        return nullptr;
+        return {};
     }
 }
 
@@ -27,4 +27,16 @@ ConfigFilterReader::ConfigFilterReader(const string &fileName) {
 ConfigFilterReader::~ConfigFilterReader() {
     cfgFile.close();
 
+}
+
+bool FilerParams::operator==(const FilerParams &rhs) const {
+    return name == rhs.name &&
+           up == rhs.up &&
+           left == rhs.left &&
+           bottom == rhs.bottom &&
+           right == rhs.right;
+}
+
+bool FilerParams::operator!=(const FilerParams &rhs) const {
+    return !(rhs == *this);
 }
