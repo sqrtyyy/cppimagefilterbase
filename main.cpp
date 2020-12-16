@@ -16,7 +16,6 @@ int main( int argc, char *argv[] )
                 Filter *filter = FilterFabric::createFilter(params);
                 ImageZone zone = ImageZone(params, studTool.getPixelData());
                 filter->filter_image(zone);
-                delete filter;
             }
             studTool.save(argv[3]);
         }
