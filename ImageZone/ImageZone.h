@@ -23,6 +23,7 @@ private:
     image_data imgData;
     pixel curPixel = {{0,0,0,0}, 0};
     bool isNull = false;
+    stbi_uc pixelArr[STBI_rgb_alpha];
 public:
     bool isEmpty() const{
         return isNull;

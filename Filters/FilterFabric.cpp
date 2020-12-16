@@ -3,6 +3,10 @@
 //
 
 #include "FilterFabric.h"
+#include "Filter_Red.h"
+#include "Filter_BW.h"
+#include "Filter_Threshold.h"
+#include "Filter_Blur.h"
 
 Filter *FilterFabric::createFilter(FilerParams params) {
     Filter* filter;
@@ -15,6 +19,9 @@ Filter *FilterFabric::createFilter(FilerParams params) {
             break;
         case FilterID::THRESHOLD_ID:
             filter = new Filter_Threshold();
+            break;
+        case FilterID::BLUR:
+            filter = new Filter_Blur();
             break;
         default:
             filter = nullptr;

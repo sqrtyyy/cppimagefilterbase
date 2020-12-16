@@ -11,13 +11,17 @@ int main( int argc, char *argv[] )
             throw "Not enough arguments";
         png_toolkit studTool;
         if(studTool.load(argv[2])){
-            FilerParams params = ConfigFilterReader::parseFile(argv[1]);
-            Filter* filterBw = FilterFabric::createFilter(params);
-            ImageZone zone = ImageZone(params, studTool.getPixelData());
-            filterBw->filter_image(zone);
-            studTool.save(argv[3]);
+            ConfigFilterReader reader(argv[1]);
+            FilerParams* params;
+            while ((params = reader.nextFilter()) != nullptr) {
+                Filter *filter = FilterFabric::createFilter(*params);
+                ImageZone zone = ImageZone(*params, studTool.getPixelData());
+                filter->filter_image(zone);
+                delete filter;
+                delete params;
             }
-
+            studTool.save(argv[3]);
+        }
     }
     catch (const char *str)
     {

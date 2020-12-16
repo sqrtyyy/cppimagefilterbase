@@ -12,6 +12,8 @@ enum class FilterID{
     BLACK_WHITE_ID,
     RED_ID,
     THRESHOLD_ID,
+    BLUR,
+    EDGE,
 
 };
 using std::string;
@@ -19,7 +21,10 @@ using std::string;
 static const std::map<string , FilterID> nameFilterToID = {
         {"black_white", FilterID::BLACK_WHITE_ID},
         {"Red",         FilterID::RED_ID},
-        {"Threshold",   FilterID::THRESHOLD_ID}
+        {"Threshold",   FilterID::THRESHOLD_ID},
+        {"Blur",        FilterID::BLUR},
+        {"Edge",        FilterID::EDGE}
+
 };
 
 struct FilerParams{
@@ -31,8 +36,12 @@ struct FilerParams{
 };
 
 class ConfigFilterReader {
+private:
+    std::ifstream cfgFile;
 public:
-    static FilerParams parseFile(string const& fileName);
+    explicit ConfigFilterReader(string const& fileName);
+    FilerParams* nextFilter();
+    ~ConfigFilterReader();
 };
 
 

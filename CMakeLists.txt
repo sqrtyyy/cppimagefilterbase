@@ -9,4 +9,4 @@ file(GLOB ImageZoneSRC ImageZone/*.cpp ImageZone/*.h)
 
 
 add_executable(${PROJECT_NAME} "main.cpp" "png_toolkit.cpp" "png_toolkit.h"
-    "stb_image.h" "stb_image_write.h" ${FILTERS_SRC} ${CFG_READER_SRC} ${ImageZoneSRC})
+    "stb_image.h" "stb_image_write.h" ${FILTERS_SRC} ${CFG_READER_SRC} ${ImageZoneSRC} Filters/Filter_Blur.cpp Filters/Filter_Blur.h Filters/ConvolutionalFilter.cpp Filters/ConvolutionalFilter.h)

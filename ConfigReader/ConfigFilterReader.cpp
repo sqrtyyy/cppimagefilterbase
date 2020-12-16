@@ -4,21 +4,27 @@
 
 #include "ConfigFilterReader.h"
 
-FilerParams ConfigFilterReader::parseFile(const string &fileName) {
-    std::ifstream cfgFile;
-    cfgFile.open(fileName);
-    if(cfgFile.is_open()){
-        FilerParams  filterParams{};
+FilerParams* ConfigFilterReader::nextFilter() {
+    if(cfgFile.is_open() && !cfgFile.eof()){
+        auto*  filterParams = new FilerParams();
         string filterName;
         cfgFile >> filterName;
         auto  filterNameID = nameFilterToID.find(filterName);
         if (filterNameID != nameFilterToID.end()) {
-            filterParams.name = filterNameID->second;
+            filterParams->name = filterNameID->second;
         }
-        cfgFile >> filterParams.up >> filterParams.left >> filterParams.bottom >> filterParams.right;
+        cfgFile >> filterParams->up >> filterParams->left >> filterParams->bottom >> filterParams->right;
         return filterParams;
     } else {
-        return {};
+        return nullptr;
     }
 }
 
+ConfigFilterReader::ConfigFilterReader(const string &fileName) {
+    cfgFile.open(fileName);
+}
+
+ConfigFilterReader::~ConfigFilterReader() {
+    cfgFile.close();
+
+}

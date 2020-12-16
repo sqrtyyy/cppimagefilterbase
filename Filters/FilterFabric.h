@@ -5,9 +5,7 @@
 #ifndef STUDENT_TOOLKIT_FILTERFABRIC_H
 #define STUDENT_TOOLKIT_FILTERFABRIC_H
 
-#include "Filter_Red.h"
-#include "Filter_BW.h"
-#include "Filter_Threshold.h"
+#include "Filter.h"
 #include "../ConfigReader/ConfigFilterReader.h"
 
 class FilterFabric {
