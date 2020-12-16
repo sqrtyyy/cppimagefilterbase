@@ -7,6 +7,7 @@
 
 #include <map>
 #include <fstream>
+#include <iostream>
 
 enum class FilterID{
     BLACK_WHITE_ID,
@@ -37,6 +38,8 @@ struct FilerParams{
     bool operator==(const FilerParams &rhs) const;
 
     bool operator!=(const FilerParams &rhs) const;
+
+    friend std::istream& operator>>(std::istream& in, FilerParams& params);
 };
 
 class ConfigFilterReader {
@@ -44,7 +47,7 @@ private:
     std::ifstream cfgFile;
 public:
     explicit ConfigFilterReader(string const& fileName);
-    FilerParams nextFilter();
+    FilerParams* nextFilter();
     ~ConfigFilterReader();
 };
 

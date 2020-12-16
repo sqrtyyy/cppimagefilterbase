@@ -11,13 +11,15 @@ int main( int argc, char *argv[] )
         png_toolkit studTool;
         if(studTool.load(argv[2])){
             ConfigFilterReader reader(argv[1]);
-            FilerParams params = reader.nextFilter();
-
-                Filter *filter = FilterFabric::createFilter(params);
-                ImageZone zone = ImageZone(params, studTool.getPixelData());
+            FilerParams* params;
+            while ((params = reader.nextFilter()) != nullptr) {
+                Filter *filter = FilterFabric::createFilter(*params);
+                ImageZone zone = ImageZone(*params, studTool.getPixelData());
                 filter->filter_image(zone);
+                delete filter;
+                delete params;
+            }
             studTool.save(argv[3]);
-            delete filter;
         }
     }
     catch (const char *str)
